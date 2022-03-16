@@ -4,14 +4,14 @@ class Song {
         artist,
         genre,
         releaseDate,
-        size,
-        length
+        length,
+        audioFile
     }) {
         this.name = name;
         this.artist = artist;
         this.genre = genre;
         this.releaseDate = releaseDate;
-        this.size = size;
         this.length = length;
+        this.audioFile = audioFile;
     }
 }
