@@ -1,6 +1,6 @@
 class Playlist{
-    constructor({name}){
+    constructor(name, files){
         this.name = name;
-        this.playlist = [];
+        this.files = files;
     }
 }
