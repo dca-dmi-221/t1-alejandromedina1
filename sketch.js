@@ -1,15 +1,22 @@
 let app;
-function preload(){
-  soundFormats('m4a','ogg');
+
+function preload() {
+  soundFormats('m4a', 'ogg');
   app = new MediaPlayer(this);
 }
+
 function setup() {
   createCanvas(400, 400);
 }
+
 function draw() {
   background(220);
+  ellipse(100, 200, 50, 50);
+  ellipse(200, 200, 50, 50);
+  ellipse(300, 200, 50, 50);
 }
-function keyPressed(){
+
+function keyPressed() {
   if (key === 'm') {
     app.playFiles();
   }
@@ -17,6 +24,12 @@ function keyPressed(){
     app.pause();
   }
   if (key === 's') {
-    app.stop();
+    app.stopSong();
   }
+  if (key === 'r') {
+    app.resume();
+  }
+}
+function mousePressed(){
+  app.playPlaylist();
 }
