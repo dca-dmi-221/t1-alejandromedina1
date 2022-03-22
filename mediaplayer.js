@@ -136,27 +136,24 @@ class MediaPlayer {
     }
 
     playPlaylist() {
+        this.stopSong();
         if (dist(100, 200, mouseX, mouseY) < 25) {
-            this.stopSong();
             this.listOfPlaylists[0].files[0].audioFile.play();
-        }
-        if (dist(200, 200, mouseX, mouseY) < 25) {
-            this.stopSong();
+        } else if (dist(200, 200, mouseX, mouseY) < 25) {
             this.listOfPlaylists[1].files[0].audioFile.play();
-        }
-        if (dist(300, 200, mouseX, mouseY) < 25) {
-            this.stopSong();
+        } else if (dist(300, 200, mouseX, mouseY) < 25) {
             this.listOfPlaylists[2].files[0].audioFile.play();
         }
+        this.nowPlaying();
     }
-    resume(){
+    resume() {
         for (let i = 0; i < this.listOfPlaylists.length; i++) {
             const playlist = this.listOfPlaylists[i];
             for (let j = 0; j < playlist.files.length; j++) {
                 const song = playlist.files[j];
                 if (song.audioFile.isPaused()) {
                     song.audioFile.play();
-                } 
+                }
             }
         }
     }
@@ -168,7 +165,9 @@ class MediaPlayer {
             const playlist = this.listOfPlaylists[i];
             for (let j = 0; j < playlist.files.length; j++) {
                 const song = playlist.files[j];
-                console.log(song.audioFile);  
+                if (song.audioFile.isPlaying()) {
+                    console.log(song.audioFile);
+                }
             }
         }
     }
@@ -177,7 +176,7 @@ class MediaPlayer {
             const playlist = this.listOfPlaylists[i];
             for (let j = 0; j < playlist.files.length; j++) {
                 const song = playlist.files[j];
-                song.audioFile.pause();  
+                song.audioFile.pause();
             }
         }
     }
