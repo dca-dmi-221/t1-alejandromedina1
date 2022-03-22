@@ -134,7 +134,7 @@ class MediaPlayer {
             audioFile: this.bigShot
         }));
     }
-
+    
     playPlaylist() {
         this.stopSong();
         if (dist(100, 200, mouseX, mouseY) < 25) {
@@ -146,6 +146,7 @@ class MediaPlayer {
         }
         this.nowPlaying();
     }
+    
     resume() {
         for (let i = 0; i < this.listOfPlaylists.length; i++) {
             const playlist = this.listOfPlaylists[i];
@@ -157,15 +158,14 @@ class MediaPlayer {
             }
         }
     }
-    interface() {
-        //
-    }
+    
     nowPlaying() {
         for (let i = 0; i < this.listOfPlaylists.length; i++) {
             const playlist = this.listOfPlaylists[i];
             for (let j = 0; j < playlist.files.length; j++) {
                 const song = playlist.files[j];
                 if (song.audioFile.isPlaying()) {
+                    console.log('Now Playing ' + song.name + ' from ' + song.artist);
                     console.log(song.audioFile);
                 }
             }
@@ -189,28 +189,51 @@ class MediaPlayer {
             }
         }
     }
-    next() {
+    
+    interface() {
         //
     }
-    back() {
-        //
-    }
-    volume() {
-        //
-    }
-    setPlayingPosition() {
-        //
-    }
-    showPlayingTime() {
-        //
-    }
+    
     mousePressedFunctions() {
-        //
+        /*this.listOfPlaylists[0].playPlaylist(100,200);
+        this.listOfPlaylists[1].playPlaylist(200,200);
+        this.listOfPlaylists[2].playPlaylist(300,200);*/
+        this.playPlaylist();
     }
     mouseDraggedFunctions() {
         //
     }
     mouseReleasedFuncionts() {
         //
+    }
+    keyPressedFunctions(){
+        if (key === 'p') {
+            this.pause();
+          }
+          if (key === 's') {
+            this.stopSong();
+          }
+          if (key === 'r') {
+            this.resume();
+          }
+          for (let i = 0; i < this.listOfPlaylists.length; i++) {
+            const playlist = this.listOfPlaylists[i];
+            for (let j = 0; j < playlist.files.length; j++) {
+                const song = playlist.files[j];
+                song.volume();
+                playlist.next();
+                playlist.back();
+            }
+        }
+    }
+    drawFunctions(){
+        for (let i = 0; i < this.listOfPlaylists.length; i++) {
+            const playlist = this.listOfPlaylists[i];
+            for (let j = 0; j < playlist.files.length; j++) {
+                const song = playlist.files[j];
+                song.showPlayingTime();
+                song.showLength();
+            }
+        }
     }
 }

@@ -14,22 +14,12 @@ function draw() {
   ellipse(100, 200, 50, 50);
   ellipse(200, 200, 50, 50);
   ellipse(300, 200, 50, 50);
+  app.drawFunctions();
 }
 
 function keyPressed() {
-  if (key === 'm') {
-    app.playFiles();
-  }
-  if (key === 'l') {
-    app.pause();
-  }
-  if (key === 's') {
-    app.stopSong();
-  }
-  if (key === 'r') {
-    app.resume();
-  }
+  app.keyPressedFunctions();
 }
 function mousePressed(){
-  app.playPlaylist();
+  app.mousePressedFunctions();
 }
