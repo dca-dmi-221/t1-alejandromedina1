@@ -14,6 +14,8 @@ class MediaPlayer {
         this.redemption = this.app.loadSound('songs/Redemption.m4a');
         this.seasons = this.app.loadSound('songs/Seasons.ogg');
         this.bigShot = this.app.loadSound('songs/Big_Shot.ogg');
+        this.volumeSlider = undefined;
+        this.playingSlider = undefined;
         this.listOfPlaylists = [];
         this.createPlaylist();
     }
@@ -27,7 +29,7 @@ class MediaPlayer {
             artist: 'Kendrick Lamar',
             genre: 'rap',
             releaseDate: 2018,
-            length: 131,
+            length: 130,
             audioFile: this.blackPanther
         }));
         this.listOfPlaylists[0].files.push(new Song({
@@ -152,17 +154,21 @@ class MediaPlayer {
     interface() {
         //
     }
+    setupFunctions(){
+        this.volume()
+        this.playing()
+    }
     mousePressedFunctions() {
         this.selectPlaylist();
         for (let i = 0; i < this.listOfPlaylists.length; i++) {
             const playlist = this.listOfPlaylists[i];
-            if (dist(mouseX,mouseY,250,300)<20) {
+            if (dist(mouseX, mouseY, 250, 300) < 20) {
                 playlist.next();
             }
-            if (dist(mouseX,mouseY,150,300)<20) {
+            if (dist(mouseX, mouseY, 150, 300) < 20) {
                 playlist.previous();
             }
-            
+
         }
     }
     mouseDraggedFunctions() {
@@ -185,23 +191,54 @@ class MediaPlayer {
                 if (key === 'r') {
                     song.resumeSong();
                 }
-                if (key === 'n') {
-                    //playlist.next();
-                }
-                if (key === 'b') {
-                    playlist.previous();
-                }
-                song.volume();
             }
         }
     }
     drawFunctions() {
+        ellipse(100, 200, 50, 50);
+        ellipse(200, 200, 50, 50);
+        ellipse(300, 200, 50, 50);
+        ellipse(250, 300, 25, 25);
+        ellipse(150, 300, 25, 25);
+        this.playingPosition();
         for (let i = 0; i < this.listOfPlaylists.length; i++) {
             const playlist = this.listOfPlaylists[i];
             for (let j = 0; j < playlist.files.length; j++) {
                 const song = playlist.files[j];
                 song.showPlayingTime();
                 song.showLength();
+                song.nowPlaying();
+                song.volumeValue(this.volumeSlider.value());
+            }
+        }
+    }
+    volume() {
+        this.volumeSlider = createSlider(0,1,0.5,0.01);
+        this.volumeSlider.position(0,370);
+    }
+    playing(){
+        let duration;
+        let currentTime;
+        for (let i = 0; i < this.listOfPlaylists.length; i++) {
+            const playlist = this.listOfPlaylists[i];
+            for (let j = 0; j < playlist.files.length; j++) {
+                const song = playlist.files[j];
+                if (song.audioFile.isPlaying()) {
+                    duration = song.audioFile.duration();
+                }
+            }
+        }
+        this.playingSlider = createSlider(0,duration,0,1);
+        this.playingSlider.position(100,350);
+    }
+    playingPosition(){
+        for (let i = 0; i < this.listOfPlaylists.length; i++) {
+            const playlist = this.listOfPlaylists[i];
+            for (let j = 0; j < playlist.files.length; j++) {
+                const song = playlist.files[j];
+                if (song.audioFile.isPlaying()) {
+                    this.playingSlider.value(song.audioFile.currentTime());
+                }
             }
         }
     }

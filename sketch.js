@@ -7,15 +7,11 @@ function preload() {
 
 function setup() {
   createCanvas(400, 400);
+  app.setupFunctions();
 }
 
 function draw() {
   background(220);
-  ellipse(100, 200, 50, 50);
-  ellipse(200, 200, 50, 50);
-  ellipse(300, 200, 50, 50);
-  ellipse(250, 300, 25, 25);
-  ellipse(150, 300, 25, 25);
   app.drawFunctions();
 }
 

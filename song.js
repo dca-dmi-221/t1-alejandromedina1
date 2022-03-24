@@ -13,16 +13,23 @@ class Song {
         this.releaseDate = releaseDate;
         this.length = length;
         this.audioFile = audioFile;
-        this.nowPlaying();
     }
     resumeSong() {
         if (this.audioFile.isPaused()) {
-            this.audioFile.play()
+            this.playSong();
         }
     }
+    playSong(){
+        this.audioFile.play()
+        console.log(this.audioFile);   
+    }
     nowPlaying() {
-        console.log('Now Playing ' + this.name + ' from ' + this.artist);
-        console.log(this.audioFile);
+        if (this.audioFile.isPlaying()) {
+            textAlign(CENTER, CENTER);
+            text('Now Playing',200,50);
+            text(this.name,200,100);
+            text(this.artist,200,150);
+        }
     }
     pauseSong() {
         if (this.audioFile.isPlaying()) {
@@ -33,9 +40,6 @@ class Song {
         if (this.audioFile.isPlaying()) {
             this.audioFile.stop();
         }
-    }
-    setPlayingPosition() {
-        //
     }
     showPlayingTime() {
         if (this.audioFile.isPlaying() || this.audioFile.isPaused()) {
@@ -49,12 +53,7 @@ class Song {
             text(length, 200, 300);
         }
     }
-    volume() {
-        if (key === 'a') {
-            this.audioFile.setVolume(0.05);
-        }
-        if (key === 'd') {
-            this.audioFile.setVolume(0.4);
-        }
+    volumeValue(value){
+        this.audioFile.setVolume(value);
     }
 }
