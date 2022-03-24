@@ -3,39 +3,39 @@ class Playlist {
         this.name = name;
         this.files = [];
     }
-    /*playPlaylist(x, y) {
-        for (let i = 0; i < this.files.length; i++) {
-            const song = this.files[i];
-            song.stop();
-            if (dist(x, y, mouseX, mouseY) < 25 && song.audioFile.isPlaying() === false) {
-                this.files[0].audioFile.play()
-            }
-            this.files[i].nowPlaying();
+    playPlaylist() {
+        for (let j = 0; j < this.files.length; j++) {
+            const song = this.files[j];
+            song.stopSong();
         }
-    }*/
-    next() {
-        for (let i = 0; i < this.files.length; i++) {
-            const song = this.files[i];
-            if (key === 'n' && song.audioFile.isPlaying()) {
-                this.files[i].audioFile.stop();
-                i = i+1;
-                this.files[i].audioFile.play();
-            }
-        }
+        this.files[0].audioFile.play();
+        this.files[0].nowPlaying();
     }
-    back() {
-        for (let i = 0; i < this.files.length; i++) {
-            if (key === 'b' && this.files[i].audioFile.isPlaying()) {
+    /*
+        next() {
+            for (let i = 0; i < this.files.length; i++) {
                 const song = this.files[i];
-                if (i >= 0) {
+                if (key === 'n' && song.audioFile.isPlaying()) {
                     this.files[i].audioFile.stop();
-                    i = i-1;
+                    i = i+1;
                     this.files[i].audioFile.play();
-                }else{
-                    song.audioFile.stop();
-                    song.audioFile.play();
                 }
             }
         }
-    }
+        back() {
+            for (let i = 0; i < this.files.length; i++) {
+                if (key === 'b' && this.files[i].audioFile.isPlaying()) {
+                    const song = this.files[i];
+                    if (i >= 0) {
+                        this.files[i].audioFile.stop();
+                        i = i-1;
+                        this.files[i].audioFile.play();
+                    }else{
+                        song.audioFile.stop();
+                        song.audioFile.play();
+                    }
+                }
+            }
+        }
+    }*/
 }

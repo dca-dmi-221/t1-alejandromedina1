@@ -23,3 +23,6 @@ function keyPressed() {
 function mousePressed(){
   app.mousePressedFunctions();
 }
+function mouseRelease(){
+  app.mouseReleasedFunctions();
+}

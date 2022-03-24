@@ -13,27 +13,28 @@ class Song {
         this.releaseDate = releaseDate;
         this.length = length;
         this.audioFile = audioFile;
-    }/*
-    resume() {
+    }
+    resumeSong() {
         if (this.audioFile.isPaused()) {
             this.audioFile.play()
         }
     }
     nowPlaying() {
         if (this.audioFile.isPlaying()) {
-            console.log(this.name);
+            console.log('Now Playing ' + this.name + ' from ' + this.artist);
+            console.log(this.audioFile);
         }
     }
-    pause() {
+    pauseSong() {
         if (this.audioFile.isPlaying()) {
             this.audioFile.pause();
         }
     }
-    stop() {
+    stopSong() {
         if (this.audioFile.isPlaying()) {
             this.audioFile.stop();
         }
-    }*/
+    }
     setPlayingPosition() {
         //
     }
@@ -47,17 +48,14 @@ class Song {
         if (this.audioFile.isPlaying()) {
             let length = Math.floor(this.audioFile.duration());
             text(length,200,300);
-        }
-            
+        }   
     }
     volume() {
         if (key === 'a') {
-            this.audioFile.setVolume(0.1);
+            this.audioFile.setVolume(0.05);
         }
         if (key === 'd') {
-            this.audioFile.setVolume(0.4);
-            
+            this.audioFile.setVolume(0.4);   
         }
-
     }
 }

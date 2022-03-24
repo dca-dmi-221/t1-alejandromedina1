@@ -134,99 +134,46 @@ class MediaPlayer {
             audioFile: this.bigShot
         }));
     }
-    
-    playPlaylist() {
-        this.stopSong();
-        if (dist(100, 200, mouseX, mouseY) < 25) {
-            this.listOfPlaylists[0].files[0].audioFile.play();
-        } else if (dist(200, 200, mouseX, mouseY) < 25) {
-            this.listOfPlaylists[1].files[0].audioFile.play();
-        } else if (dist(300, 200, mouseX, mouseY) < 25) {
-            this.listOfPlaylists[2].files[0].audioFile.play();
-        }
-        this.nowPlaying();
-    }
-    
-    resume() {
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            for (let j = 0; j < playlist.files.length; j++) {
-                const song = playlist.files[j];
-                if (song.audioFile.isPaused()) {
-                    song.audioFile.play();
-                }
-            }
+    selectPlaylist() {
+        if (dist(mouseX, mouseY, 100, 200) < 25) {
+            this.listOfPlaylists[0].playPlaylist();
+        } else if (dist(mouseX, mouseY, 200, 200) < 25) {
+            this.listOfPlaylists[1].playPlaylist();
+        } else if (dist(mouseX, mouseY, 300, 200) < 25) {
+            this.listOfPlaylists[2].playPlaylist();
         }
     }
-    
-    nowPlaying() {
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            for (let j = 0; j < playlist.files.length; j++) {
-                const song = playlist.files[j];
-                if (song.audioFile.isPlaying()) {
-                    console.log('Now Playing ' + song.name + ' from ' + song.artist);
-                    console.log(song.audioFile);
-                }
-            }
-        }
-    }
-    pause() {
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            for (let j = 0; j < playlist.files.length; j++) {
-                const song = playlist.files[j];
-                song.audioFile.pause();
-            }
-        }
-    }
-    stopSong() {
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            for (let j = 0; j < playlist.files.length; j++) {
-                const song = playlist.files[j];
-                song.audioFile.stop();
-            }
-        }
-    }
-    
     interface() {
         //
     }
-    
     mousePressedFunctions() {
-        /*this.listOfPlaylists[0].playPlaylist(100,200);
-        this.listOfPlaylists[1].playPlaylist(200,200);
-        this.listOfPlaylists[2].playPlaylist(300,200);*/
-        this.playPlaylist();
+        this.selectPlaylist();
     }
     mouseDraggedFunctions() {
         //
     }
-    mouseReleasedFuncionts() {
+    mouseReleasedFunctions() {
         //
     }
-    keyPressedFunctions(){
-        if (key === 'p') {
-            this.pause();
-          }
-          if (key === 's') {
-            this.stopSong();
-          }
-          if (key === 'r') {
-            this.resume();
-          }
-          for (let i = 0; i < this.listOfPlaylists.length; i++) {
+    keyPressedFunctions() {
+        for (let i = 0; i < this.listOfPlaylists.length; i++) {
             const playlist = this.listOfPlaylists[i];
             for (let j = 0; j < playlist.files.length; j++) {
                 const song = playlist.files[j];
+                if (key === 'p') {
+                    song.pauseSong();
+                }
+                if (key === 's') {
+                    song.stopSong();
+                }
+                if (key === 'r') {
+                    song.resumeSong();
+                }
                 song.volume();
-                playlist.next();
-                playlist.back();
             }
         }
     }
-    drawFunctions(){
+    drawFunctions() {
         for (let i = 0; i < this.listOfPlaylists.length; i++) {
             const playlist = this.listOfPlaylists[i];
             for (let j = 0; j < playlist.files.length; j++) {
