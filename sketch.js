@@ -14,6 +14,8 @@ function draw() {
   ellipse(100, 200, 50, 50);
   ellipse(200, 200, 50, 50);
   ellipse(300, 200, 50, 50);
+  ellipse(250, 300, 25, 25);
+  ellipse(150, 300, 25, 25);
   app.drawFunctions();
 }
 

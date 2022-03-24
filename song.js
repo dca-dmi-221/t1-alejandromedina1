@@ -13,6 +13,7 @@ class Song {
         this.releaseDate = releaseDate;
         this.length = length;
         this.audioFile = audioFile;
+        this.nowPlaying();
     }
     resumeSong() {
         if (this.audioFile.isPaused()) {
@@ -20,10 +21,8 @@ class Song {
         }
     }
     nowPlaying() {
-        if (this.audioFile.isPlaying()) {
-            console.log('Now Playing ' + this.name + ' from ' + this.artist);
-            console.log(this.audioFile);
-        }
+        console.log('Now Playing ' + this.name + ' from ' + this.artist);
+        console.log(this.audioFile);
     }
     pauseSong() {
         if (this.audioFile.isPlaying()) {
@@ -39,23 +38,23 @@ class Song {
         //
     }
     showPlayingTime() {
-        if (this.audioFile.isPlaying()) {
+        if (this.audioFile.isPlaying() || this.audioFile.isPaused()) {
             let time = Math.floor(this.audioFile.currentTime());
-            text(time,100,300);
+            text(time, 100, 300);
         }
     }
-    showLength(){
-        if (this.audioFile.isPlaying()) {
+    showLength() {
+        if (this.audioFile.isPlaying() || this.audioFile.isPaused()) {
             let length = Math.floor(this.audioFile.duration());
-            text(length,200,300);
-        }   
+            text(length, 200, 300);
+        }
     }
     volume() {
         if (key === 'a') {
             this.audioFile.setVolume(0.05);
         }
         if (key === 'd') {
-            this.audioFile.setVolume(0.4);   
+            this.audioFile.setVolume(0.4);
         }
     }
 }

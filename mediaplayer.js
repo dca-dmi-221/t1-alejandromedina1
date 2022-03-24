@@ -136,10 +136,16 @@ class MediaPlayer {
     }
     selectPlaylist() {
         if (dist(mouseX, mouseY, 100, 200) < 25) {
+            this.listOfPlaylists[1].stopPlaylist();
+            this.listOfPlaylists[2].stopPlaylist();
             this.listOfPlaylists[0].playPlaylist();
         } else if (dist(mouseX, mouseY, 200, 200) < 25) {
+            this.listOfPlaylists[0].stopPlaylist();
+            this.listOfPlaylists[2].stopPlaylist();
             this.listOfPlaylists[1].playPlaylist();
         } else if (dist(mouseX, mouseY, 300, 200) < 25) {
+            this.listOfPlaylists[0].stopPlaylist();
+            this.listOfPlaylists[1].stopPlaylist();
             this.listOfPlaylists[2].playPlaylist();
         }
     }
@@ -148,6 +154,16 @@ class MediaPlayer {
     }
     mousePressedFunctions() {
         this.selectPlaylist();
+        for (let i = 0; i < this.listOfPlaylists.length; i++) {
+            const playlist = this.listOfPlaylists[i];
+            if (dist(mouseX,mouseY,250,300)<20) {
+                playlist.next();
+            }
+            if (dist(mouseX,mouseY,150,300)<20) {
+                playlist.previous();
+            }
+            
+        }
     }
     mouseDraggedFunctions() {
         //
@@ -168,6 +184,12 @@ class MediaPlayer {
                 }
                 if (key === 'r') {
                     song.resumeSong();
+                }
+                if (key === 'n') {
+                    //playlist.next();
+                }
+                if (key === 'b') {
+                    playlist.previous();
                 }
                 song.volume();
             }
