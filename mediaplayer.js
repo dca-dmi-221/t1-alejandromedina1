@@ -137,22 +137,43 @@ class MediaPlayer {
         }));
     }
     selectPlaylist() {
-        if (dist(mouseX, mouseY, 100, 200) < 25) {
-            this.listOfPlaylists[1].stopPlaylist();
-            this.listOfPlaylists[2].stopPlaylist();
-            this.listOfPlaylists[0].playPlaylist();
-        } else if (dist(mouseX, mouseY, 200, 200) < 25) {
-            this.listOfPlaylists[0].stopPlaylist();
-            this.listOfPlaylists[2].stopPlaylist();
-            this.listOfPlaylists[1].playPlaylist();
-        } else if (dist(mouseX, mouseY, 300, 200) < 25) {
-            this.listOfPlaylists[0].stopPlaylist();
-            this.listOfPlaylists[1].stopPlaylist();
-            this.listOfPlaylists[2].playPlaylist();
+        for (let i = 0; i < this.listOfPlaylists.length; i++) {
+            const playlist = this.listOfPlaylists[i];
+            if (dist(mouseX, mouseY, 100, 200) < 25) {
+                if (i !== 0) {
+                    this.listOfPlaylists[i].stopPlaylist();
+                    
+                }
+                this.listOfPlaylists[0].playPlaylist();
+            } else if (dist(mouseX, mouseY, 200, 200) < 25) {
+                this.listOfPlaylists[0].stopPlaylist();
+                this.listOfPlaylists[2].stopPlaylist();
+                this.listOfPlaylists[1].playPlaylist();
+            } else if (dist(mouseX, mouseY, 300, 200) < 25) {
+                this.listOfPlaylists[0].stopPlaylist();
+                this.listOfPlaylists[1].stopPlaylist();
+                this.listOfPlaylists[2].playPlaylist();
+            }
         }
     }
     interface() {
-        //
+        switch (screen) {
+            case 0:
+                
+                break;
+                case 1:
+                
+                break;
+                case 2:
+                
+                break;
+                case 3:
+                
+                break;
+        
+            default:
+                break;
+        }
     }
     setupFunctions(){
         this.volume()

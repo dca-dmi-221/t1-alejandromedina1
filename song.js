@@ -56,4 +56,7 @@ class Song {
     volumeValue(value){
         this.audioFile.setVolume(value);
     }
+    hasEnded() {
+        return (Math.floor(this.audioFile.currentTime()) >= Math.floor(this.audioFile.duration()));
+    }
 }

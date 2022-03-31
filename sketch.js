@@ -6,7 +6,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(1920, 1080);
   app.setupFunctions();
 }
 
@@ -21,6 +21,6 @@ function keyPressed() {
 function mousePressed(){
   app.mousePressedFunctions();
 }
-function mouseRelease(){
+function mouseReleased(){
   app.mouseReleasedFunctions();
 }

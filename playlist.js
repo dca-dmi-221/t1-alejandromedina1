@@ -6,6 +6,7 @@ class Playlist {
     playPlaylist() {
         this.stopPlaylist();
         this.files[0].playSong();
+        this.onEnded(this.files[0]);
     }
     keepPlaying(next) {
                 this.files[next].playSong();
@@ -24,8 +25,13 @@ class Playlist {
                 this.files[i].stopSong();
                 i = i + 1;
                 this.files[i].playSong();
+                this.onEnded(this.files[i]);
+
             }
         }
+    }
+    onEnded(song) {
+        if(song.hasEnded()) this.next();
     }
     previous() {
         for (let i = 0; i < this.files.length; i++) {
