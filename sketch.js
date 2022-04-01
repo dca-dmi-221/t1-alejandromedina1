@@ -2,7 +2,7 @@ let app;
 
 function preload() {
   soundFormats('m4a', 'ogg');
-  app = new MediaPlayer(this);
+  app = new MediaPlayer();
 }
 
 function setup() {

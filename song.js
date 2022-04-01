@@ -13,6 +13,7 @@ class Song {
         this.releaseDate = releaseDate;
         this.length = length;
         this.audioFile = audioFile;
+        this.isSelected = false;
     }
     resumeSong() {
         if (this.audioFile.isPaused()) {
@@ -55,8 +56,5 @@ class Song {
     }
     volumeValue(value){
         this.audioFile.setVolume(value);
-    }
-    hasEnded() {
-        return (Math.floor(this.audioFile.currentTime()) >= Math.floor(this.audioFile.duration()));
     }
 }

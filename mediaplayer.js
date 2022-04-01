@@ -1,19 +1,18 @@
 class MediaPlayer {
-    constructor(app) {
-        this.app = app;
-        this.blackPanther = this.app.loadSound('songs/Black_Panther.m4a');
-        this.allTheStars = this.app.loadSound('songs/Kendrick_Lamar_SZA_All_The_Stars.ogg');
-        this.x = this.app.loadSound('songs/Kendrick_Lamar_X.ogg');
-        this.theWays = this.app.loadSound('songs/The_Ways.ogg');
-        this.prayForMe = this.app.loadSound('songs/The_Weeknd_Kendrick_Lamar_Pray_For_Me.m4a');
-        this.opps = this.app.loadSound('songs/Opps.m4a');
-        this.iAm = this.app.loadSound('songs/I_Am.m4a');
-        this.paramedic = this.app.loadSound('songs/Paramedic.ogg');
-        this.bloodyWaters = this.app.loadSound('songs/Bloody_Waters.m4a');
-        this.kingsDead = this.app.loadSound('songs/Kings_Dead.ogg');
-        this.redemption = this.app.loadSound('songs/Redemption.m4a');
-        this.seasons = this.app.loadSound('songs/Seasons.ogg');
-        this.bigShot = this.app.loadSound('songs/Big_Shot.ogg');
+    constructor() {
+        this.blackPanther = loadSound('songs/Black_Panther.m4a');
+        this.allTheStars = loadSound('songs/Kendrick_Lamar_SZA_All_The_Stars.ogg');
+        this.x = loadSound('songs/Kendrick_Lamar_X.ogg');
+        this.theWays = loadSound('songs/The_Ways.ogg');
+        this.prayForMe = loadSound('songs/The_Weeknd_Kendrick_Lamar_Pray_For_Me.m4a');
+        this.opps = loadSound('songs/Opps.m4a');
+        this.iAm = loadSound('songs/I_Am.m4a');
+        this.paramedic = loadSound('songs/Paramedic.ogg');
+        this.bloodyWaters = loadSound('songs/Bloody_Waters.m4a');
+        this.kingsDead = loadSound('songs/Kings_Dead.ogg');
+        this.redemption = loadSound('songs/Redemption.m4a');
+        this.seasons = loadSound('songs/Seasons.ogg');
+        this.bigShot = loadSound('songs/Big_Shot.ogg');
         this.volumeSlider = undefined;
         this.playingSlider = undefined;
         this.listOfPlaylists = [];
@@ -157,23 +156,7 @@ class MediaPlayer {
         }
     }
     interface() {
-        switch (screen) {
-            case 0:
-                
-                break;
-                case 1:
-                
-                break;
-                case 2:
-                
-                break;
-                case 3:
-                
-                break;
-        
-            default:
-                break;
-        }
+        //
     }
     setupFunctions(){
         this.volume()
