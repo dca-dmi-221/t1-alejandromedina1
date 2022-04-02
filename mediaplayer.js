@@ -17,6 +17,25 @@ class MediaPlayer {
         this.playingSlider = undefined;
         this.listOfPlaylists = [];
         this.createPlaylist();
+        this.input = createFileInput((file)=>{
+            console.log(file);
+            this.handleSong(file);
+        });
+        this.input.position(500,500);
+    }
+
+    handleSong(song){
+        
+        let songFile = new p5.SoundFile(song);
+
+        this.listOfPlaylists[0].files.push(new Song({
+            name: song.name,
+            artist: 'random',
+            genre: 'ra',
+            releaseDate: 2018,
+            length: 232,
+            audioFile: songFile
+        }))
     }
 
     createPlaylist() {
@@ -136,24 +155,25 @@ class MediaPlayer {
         }));
     }
     selectPlaylist() {
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            if (dist(mouseX, mouseY, 100, 200) < 25) {
-                if (i !== 0) {
-                    this.listOfPlaylists[i].stopPlaylist();
-                    
-                }
+        if (dist(mouseX, mouseY, 100, 200) < 25) {
+
+            this.listOfPlaylists[0].playPlaylist();
+        }
+            
+            /* if (dist(mouseX, mouseY, 100, 200) < 25) {
+                this.listOfPlaylists[1].stopPlaylist();
+                this.listOfPlaylists[2].stopPlaylist();
                 this.listOfPlaylists[0].playPlaylist();
-            } else if (dist(mouseX, mouseY, 200, 200) < 25) {
+            }  if (dist(mouseX, mouseY, 200, 200) < 25) {
                 this.listOfPlaylists[0].stopPlaylist();
                 this.listOfPlaylists[2].stopPlaylist();
                 this.listOfPlaylists[1].playPlaylist();
-            } else if (dist(mouseX, mouseY, 300, 200) < 25) {
+            }  if (dist(mouseX, mouseY, 300, 200) < 25) {
                 this.listOfPlaylists[0].stopPlaylist();
                 this.listOfPlaylists[1].stopPlaylist();
                 this.listOfPlaylists[2].playPlaylist();
-            }
-        }
+            } */
+        
     }
     interface() {
         //
@@ -198,6 +218,7 @@ class MediaPlayer {
             }
         }
     }
+
     drawFunctions() {
         ellipse(100, 200, 50, 50);
         ellipse(200, 200, 50, 50);
@@ -213,6 +234,8 @@ class MediaPlayer {
                 song.showLength();
                 song.nowPlaying();
                 song.volumeValue(this.volumeSlider.value());
+                
+                
             }
         }
     }

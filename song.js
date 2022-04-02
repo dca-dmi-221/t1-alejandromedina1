@@ -22,7 +22,6 @@ class Song {
     }
     playSong(){
         this.audioFile.play()
-        console.log(this.audioFile);   
     }
     nowPlaying() {
         if (this.audioFile.isPlaying()) {

@@ -6,8 +6,16 @@ class Playlist {
     }
     playPlaylist() {
         this.stopPlaylist();
-        this.files[0].playSong();
-    }
+        this.currentSong = this.files[0];
+        this.currentSong.playSong();
+        console.log(this.currentSong)
+                    this.currentSong.audioFile.onended(() =>{
+                        this.currentSong = this.files[this.files.indexOf(this.currentSong) + 1]
+                        console.log(this.currentSong)
+                        this.currentSong.playSong();
+                    })
+                }
+            
     stopPlaylist() {
         for (let j = 0; j < this.files.length; j++) {
             const song = this.files[j];
@@ -19,6 +27,7 @@ class Playlist {
             const song = this.files[i];
             if (song.audioFile.isPlaying()) {
                 this.files[i].stopSong();
+
                 i = i + 1;
                 this.files[i].playSong();
             }
@@ -39,4 +48,6 @@ class Playlist {
             }
         }
     }
+
+
 }
