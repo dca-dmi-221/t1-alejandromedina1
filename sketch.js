@@ -2,7 +2,7 @@ let app;
 
 function preload() {
   soundFormats('m4a', 'ogg');
-  app = new MediaPlayer();
+  app = new App();
 }
 
 function setup() {
@@ -15,12 +15,14 @@ function draw() {
   app.drawFunctions();
 }
 
-function keyPressed() {
-  app.keyPressedFunctions();
-}
 function mousePressed(){
   app.mousePressedFunctions();
 }
+
+function mouseDragged(){
+  app.mouseDraggedFunctions()
+}
+
 function mouseReleased(){
   app.mouseReleasedFunctions();
 }

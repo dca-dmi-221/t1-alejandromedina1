@@ -4,16 +4,17 @@ class Song {
         artist,
         genre,
         releaseDate,
-        length,
-        audioFile
+        audioFile,
+        length
     }) {
         this.name = name;
         this.artist = artist;
         this.genre = genre;
-        this.releaseDate = releaseDate;
         this.length = length;
+        this.releaseDate = releaseDate;
         this.audioFile = audioFile;
-        this.isSelected = false;
+        this.x = undefined;
+        this.y = undefined;
     }
     resumeSong() {
         if (this.audioFile.isPaused()) {
@@ -23,23 +24,13 @@ class Song {
     playSong(){
         this.audioFile.play()
     }
-    nowPlaying() {
-        if (this.audioFile.isPlaying()) {
-            textAlign(CENTER, CENTER);
-            text('Now Playing',200,50);
-            text(this.name,200,100);
-            text(this.artist,200,150);
-        }
-    }
     pauseSong() {
         if (this.audioFile.isPlaying()) {
             this.audioFile.pause();
         }
     }
     stopSong() {
-        if (this.audioFile.isPlaying()) {
             this.audioFile.stop();
-        }
     }
     showPlayingTime() {
         if (this.audioFile.isPlaying() || this.audioFile.isPaused()) {

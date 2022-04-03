@@ -1,53 +1,80 @@
 class Playlist {
-    constructor(name) {
+    constructor({
+        name,
+        cover,
+        x,
+        y,
+    }) {
         this.name = name;
-        this.files = [];
+        this.cover = cover;
+        this.x = x;
+        this.y = y;
+        this.songs = [];
         this.currentSong;
     }
     playPlaylist() {
-        this.stopPlaylist();
-        this.currentSong = this.files[0];
-        this.currentSong.playSong();
-        console.log(this.currentSong)
-                    this.currentSong.audioFile.onended(() =>{
-                        this.currentSong = this.files[this.files.indexOf(this.currentSong) + 1]
-                        console.log(this.currentSong)
-                        this.currentSong.playSong();
-                    })
-                }
-            
+        if (dist(211.5, 425.5, mouseX, mouseY) < 30) {
+            this.stopPlaylist();
+            this.songs[0].playSong();
+        }
+    }
+    nowPlaying() {
+        this.songs.forEach(song => {
+            if (song.audioFile.isPlaying()) {
+                textSize(26)
+                fill(255);
+                textStyle(BOLD)
+                text(song.name, 150, 993);
+                textSize(22)
+                textStyle(ITALIC)
+                text(song.artist, 150, 1021);
+                textStyle(NORMAL)
+                fill(214, 30, 208);
+                text(song.length + ' seconds', 150, 1047);
+                rect(944,991, 5, 17)
+                rect(954,991, 5, 17)
+            }
+            if (song.audioFile.isPlaying() === false) {
+                triangle(946,991,960,1000,946,1009);
+                
+            }
+        });
+    }
+    showCover() {
+        image(this.cover, 172, 483, 377, 377);
+    }
     stopPlaylist() {
-        for (let j = 0; j < this.files.length; j++) {
-            const song = this.files[j];
+        for (let j = 0; j < this.songs.length; j++) {
+            const song = this.songs[j];
             song.stopSong();
         }
     }
     next() {
-        for (let i = 0; i < this.files.length; i++) {
-            const song = this.files[i];
-            if (song.audioFile.isPlaying()) {
-                this.files[i].stopSong();
-
-                i = i + 1;
-                this.files[i].playSong();
-            }
-        }
-    }
-    previous() {
-        for (let i = 0; i < this.files.length; i++) {
-            const song = this.files[i];
-            if (this.files[i].audioFile.isPlaying()) {
-                if (i > 0) {
-                    this.files[i].stopSong();
-                    i = i - 1;
-                    this.files[i].playSong();
-                } else if (i === 0) {
-                    this.files[i].stopSong();
-                    this.files[i].playSong();
+        for (let i = 0; i < this.songs.length; i++) {
+            const song = this.songs[i];
+            if (dist(1006, 1002, mouseX, mouseY) < 30) {
+                if (song.audioFile.isPlaying()) {
+                    this.songs[i].stopSong();
+                    i = i + 1;
+                    this.songs[i].playSong();
                 }
             }
         }
     }
-
-
+    previous() {
+        for (let i = 0; i < this.songs.length; i++) {
+            if (dist(894, 1002, mouseX, mouseY) < 30) {
+                if (this.songs[i].audioFile.isPlaying()) {
+                    if (i > 0) {
+                        this.songs[i].stopSong();
+                        i = i - 1;
+                        this.songs[i].playSong();
+                    } else if (i === 0) {
+                        this.songs[i].stopSong();
+                        this.songs[i].playSong();
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,272 +1,270 @@
 class MediaPlayer {
     constructor() {
-        this.blackPanther = loadSound('songs/Black_Panther.m4a');
-        this.allTheStars = loadSound('songs/Kendrick_Lamar_SZA_All_The_Stars.ogg');
-        this.x = loadSound('songs/Kendrick_Lamar_X.ogg');
-        this.theWays = loadSound('songs/The_Ways.ogg');
-        this.prayForMe = loadSound('songs/The_Weeknd_Kendrick_Lamar_Pray_For_Me.m4a');
-        this.opps = loadSound('songs/Opps.m4a');
-        this.iAm = loadSound('songs/I_Am.m4a');
-        this.paramedic = loadSound('songs/Paramedic.ogg');
-        this.bloodyWaters = loadSound('songs/Bloody_Waters.m4a');
-        this.kingsDead = loadSound('songs/Kings_Dead.ogg');
-        this.redemption = loadSound('songs/Redemption.m4a');
-        this.seasons = loadSound('songs/Seasons.ogg');
-        this.bigShot = loadSound('songs/Big_Shot.ogg');
+        this.playlists = [];
+        this.songs = [];
+        this.songs[0] = loadSound('songs/Black_Panther.m4a');
+        this.songs[1] = loadSound('songs/Kendrick_Lamar_SZA_All_The_Stars.ogg');
+        this.songs[2] = loadSound('songs/Kendrick_Lamar_X.ogg');
+        this.songs[3] = loadSound('songs/The_Ways.ogg');
+        this.songs[4] = loadSound('songs/The_Weeknd_Kendrick_Lamar_Pray_For_Me.m4a');
+        this.songs[5] = loadSound('songs/Opps.m4a');
+        this.songs[6] = loadSound('songs/I_Am.m4a');
+        this.songs[7] = loadSound('songs/Paramedic.ogg');
+        this.songs[8] = loadSound('songs/Bloody_Waters.m4a');
+        this.songs[9] = loadSound('songs/Kings_Dead.ogg');
+        this.songs[10] = loadSound('songs/Redemption.m4a');
+        this.songs[11] = loadSound('songs/Seasons.ogg');
+        this.songs[12] = loadSound('songs/Big_Shot.ogg');
+        this.covers = [];
+        this.covers[0] = loadImage('./resources/cover1.png');
+        this.covers[1] = loadImage('./resources/cover2.png');
+        this.covers[2] = loadImage('./resources/cover3.png');
+        this.selectedPlaylist = undefined
         this.volumeSlider = undefined;
         this.playingSlider = undefined;
-        this.listOfPlaylists = [];
-        this.createPlaylist();
-        this.input = createFileInput((file)=>{
+        this.soundInput = undefined;
+        this.isPlaying = false;
+    }
+    createSoundInput() {
+        this.soundInput = createFileInput((file) => {
             console.log(file);
             this.handleSong(file);
         });
-        this.input.position(500,500);
+        this.soundInput.position(1400, 857);
+        this.soundInput.style('background-color', '#474747');
     }
-
-    handleSong(song){
-        
-        let songFile = new p5.SoundFile(song);
-
-        this.listOfPlaylists[0].files.push(new Song({
-            name: song.name,
-            artist: 'random',
-            genre: 'ra',
-            releaseDate: 2018,
-            length: 232,
-            audioFile: songFile
-        }))
+    createVolumeInput() {
+        this.volumeSlider = createSlider(0, 1, 0.5, 0.01);
+        this.volumeSlider.style('color', '#d61ed0');
+        this.volumeSlider.position(1680, 1003);
     }
-
-    createPlaylist() {
-        this.listOfPlaylists.push(new Playlist(
-            'Black Panther vol.1',
-        ));
-        this.listOfPlaylists[0].files.push(new Song({
+    volume() {
+        this.playlists.forEach(playlist => {
+            playlist.songs.forEach(song => {
+                song.volumeValue(this.volumeSlider.value());
+            });
+        });
+    }
+    createPlaylists() {
+        this.playlists.push(new Playlist({
+            name: 'Black Panther Vol.1 ',
+            cover: this.covers[0],
+            x: undefined,
+            y: undefined
+        }));
+        this.playlists.push(new Playlist({
+            name: 'Black Panther Vol.2 ',
+            cover: this.covers[1],
+            x: undefined,
+            y: undefined
+        }));
+        this.playlists.push(new Playlist({
+            name: 'Black Panther Vol.3 ',
+            cover: this.covers[2],
+            x: undefined,
+            y: undefined
+        }));
+        this.createSongsForPlaylist();
+    }
+    drawPlaylists(ui) {
+        if (ui.interface === 0) {
+            let xi = 893
+            let yi = 130
+            const step = 330
+            this.playlists.forEach((playlist, i) => {
+                const mod = i % 3;
+                if (mod === 0) yi += 300;
+                playlist.x = xi + (step * mod);
+                playlist.y = yi;
+                image(playlist.cover, playlist.x, playlist.y);
+            });
+        }
+        if (ui.interface !== 0) {
+            let xi = 1579
+            let yi = 176
+            const step = 100
+            this.playlists.forEach((playlist, i) => {
+                playlist.x = xi;
+                playlist.y = yi + (step * i);
+                fill(255);
+                textStyle(BOLD);
+                textSize(24);
+                text(playlist.name, playlist.x, playlist.y);
+                textStyle(NORMAL);
+                textSize(18);
+                fill(214, 30, 208);
+                text(playlist.songs.length + ' songs', playlist.x, playlist.y + 20);
+                this.volume();
+                playlist.showCover();
+            });
+        }
+    }
+    selectPlaylist(ui) {
+        if (ui.interface === 0) {
+            this.playlists.forEach(playlist => {
+                const width = playlist.x + 305;
+                const height = playlist.y + 270;
+                if (playlist.x < mouseX && mouseX < width && playlist.y < mouseY && mouseY < height) {
+                    ui.interface = 1;
+                    this.createSoundInput();
+                    this.createVolumeInput();
+                    this.selectedPlaylist = playlist;
+                }
+            });
+        }
+    }
+    createSongsForPlaylist() {
+        this.playlists[0].songs.push(new Song({
             name: 'Black Panther',
             artist: 'Kendrick Lamar',
             genre: 'rap',
             releaseDate: 2018,
-            length: 130,
-            audioFile: this.blackPanther
-        }));
-        this.listOfPlaylists[0].files.push(new Song({
+            audioFile: this.songs[0],
+            length: Math.floor(this.songs[0].duration())
+        }))
+        this.playlists[0].songs.push(new Song({
             name: 'All the Stars',
             artist: 'Kendrick Lamar',
             genre: 'rap',
             releaseDate: 2018,
-            length: 232,
-            audioFile: this.allTheStars
-        }));
-        this.listOfPlaylists[0].files.push(new Song({
+            audioFile: this.songs[1],
+            length: Math.floor(this.songs[1].duration())
+        }))
+        this.playlists[0].songs.push(new Song({
             name: 'X',
             artist: '2 Chainz',
             genre: 'rap',
             releaseDate: 2018,
-            length: 267,
-            audioFile: this.x
-        }));
-        this.listOfPlaylists[0].files.push(new Song({
+            audioFile: this.songs[2],
+            length: Math.floor(this.songs[2].duration())
+        }))
+        this.playlists[0].songs.push(new Song({
             name: 'The Ways',
             artist: 'Khalid',
             genre: 'R&B',
             releaseDate: 2018,
-            length: 239,
-            audioFile: this.theWays
-        }));
-        this.listOfPlaylists[0].files.push(new Song({
+            audioFile: this.songs[3],
+            length: Math.floor(this.songs[3].duration())
+        }))
+        this.playlists[0].songs.push(new Song({
             name: 'Pray For Me',
             artist: 'Khalid',
             genre: 'R&B',
             releaseDate: 2018,
-            length: 239,
-            audioFile: this.prayForMe
-        }));
-
-        this.listOfPlaylists.push(new Playlist(
-            'Black Panther vol.2',
-        ));
-        this.listOfPlaylists[1].files.push(new Song({
+            audioFile: this.songs[4],
+            length: Math.floor(this.songs[4].duration())
+        }))
+        this.playlists[1].songs.push(new Song({
             name: 'Opps',
             artist: 'Vince Staples',
             genre: 'rap',
             releaseDate: 2018,
-            length: 181,
-            audioFile: this.opps
-        }));
-        this.listOfPlaylists[1].files.push(new Song({
+            audioFile: this.songs[5],
+            length: Math.floor(this.songs[5].duration())
+        }))
+        this.playlists[1].songs.push(new Song({
             name: 'I Am',
             artist: 'Jorja Smith',
             genre: 'rap',
             releaseDate: 2018,
-            length: 209,
-            audioFile: this.iAm
-        }));
-        this.listOfPlaylists[1].files.push(new Song({
+            audioFile: this.songs[6],
+            length: Math.floor(this.songs[6].duration())
+        }))
+        this.playlists[1].songs.push(new Song({
             name: 'Paramedic!',
             artist: 'SOB X RBE',
             genre: 'rap',
             releaseDate: 2018,
-            length: 219,
-            audioFile: this.paramedic
-        }));
-        this.listOfPlaylists[1].files.push(new Song({
+            audioFile: this.songs[7],
+            length: Math.floor(this.songs[7].duration())
+        }))
+        this.playlists[1].songs.push(new Song({
             name: 'Bloody Waters',
             artist: 'Anderson .Paak',
             genre: 'R&B',
             releaseDate: 2018,
-            length: 272,
-            audioFile: this.bloodyWaters
-        }));
-        this.listOfPlaylists[1].files.push(new Song({
+            audioFile: this.songs[8],
+            length: Math.floor(this.songs[8].duration())
+        }))
+        this.playlists[1].songs.push(new Song({
             name: 'Kings Dead',
             artist: 'Kendrick Lamar',
             genre: 'R&B',
             releaseDate: 2018,
-            length: 225,
-            audioFile: this.kingsDead
-        }));
-        this.listOfPlaylists.push(new Playlist(
-            'Black Panther vol.3',
-        ));
-        this.listOfPlaylists[2].files.push(new Song({
+            audioFile: this.songs[9],
+            length: Math.floor(this.songs[9].duration())
+        }))
+        this.playlists[2].songs.push(new Song({
             name: 'Redemption',
             artist: 'Babes Wodumo',
             genre: 'rap',
             releaseDate: 2018,
-            length: 222,
-            audioFile: this.redemption
-        }));
-        this.listOfPlaylists[2].files.push(new Song({
+            audioFile: this.songs[10],
+            length: Math.floor(this.songs[10].duration())
+        }))
+        this.playlists[2].songs.push(new Song({
             name: 'Seasons',
             artist: 'Mozzy',
             genre: 'rap',
             releaseDate: 2018,
-            length: 242,
-            audioFile: this.seasons
-        }));
-        this.listOfPlaylists[2].files.push(new Song({
+            audioFile: this.songs[11],
+            length: Math.floor(this.songs[11].duration())
+        }))
+        this.playlists[2].songs.push(new Song({
             name: 'Big Shot',
             artist: 'Travis Scott',
             genre: 'rap',
             releaseDate: 2018,
-            length: 222,
-            audioFile: this.bigShot
-        }));
+            audioFile: this.songs[12],
+            length: Math.floor(this.songs[12].duration())
+        }))
     }
-    selectPlaylist() {
-        if (dist(mouseX, mouseY, 100, 200) < 25) {
-
-            this.listOfPlaylists[0].playPlaylist();
-        }
-            
-            /* if (dist(mouseX, mouseY, 100, 200) < 25) {
-                this.listOfPlaylists[1].stopPlaylist();
-                this.listOfPlaylists[2].stopPlaylist();
-                this.listOfPlaylists[0].playPlaylist();
-            }  if (dist(mouseX, mouseY, 200, 200) < 25) {
-                this.listOfPlaylists[0].stopPlaylist();
-                this.listOfPlaylists[2].stopPlaylist();
-                this.listOfPlaylists[1].playPlaylist();
-            }  if (dist(mouseX, mouseY, 300, 200) < 25) {
-                this.listOfPlaylists[0].stopPlaylist();
-                this.listOfPlaylists[1].stopPlaylist();
-                this.listOfPlaylists[2].playPlaylist();
-            } */
-        
+    handleSong(song) {
+        let songFile = new p5.SoundFile(song);
+        const name = window.prompt('Name of the song: ');
+        const artist = window.prompt('Artist of the song: ');
+        const genre = window.prompt('Genre of the song: ')
+        const releaseDate = window.prompt('Release Date: ')
+        const playlist = window.prompt('In which playlist would you like to add the song?');
+        const numberOfPlaylist = parseInt(playlist) - 1;
+        this.playlists[numberOfPlaylist].songs.push(new Song({
+            name: name,
+            artist: artist,
+            genre: genre,
+            releaseDate: releaseDate,
+            audioFile: songFile,
+            length: Math.floor(songFile.duration())
+        }))
     }
-    interface() {
-        //
-    }
-    setupFunctions(){
-        this.volume()
-        this.playing()
-    }
-    mousePressedFunctions() {
-        this.selectPlaylist();
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            if (dist(mouseX, mouseY, 250, 300) < 20) {
-                playlist.next();
-            }
-            if (dist(mouseX, mouseY, 150, 300) < 20) {
-                playlist.previous();
-            }
-
+    createNewPlaylist(pick) {
+        if (dist(928, 353, mouseX, mouseY) < 30) {
+            const name = window.prompt('Name your Playlist');
+            this.playlists.push(new Playlist({
+                name: name,
+                cover: this.covers[pick],
+                x: 893,
+                y: 700
+            }));
         }
     }
-    mouseDraggedFunctions() {
-        //
-    }
-    mouseReleasedFunctions() {
-        //
-    }
-    keyPressedFunctions() {
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            for (let j = 0; j < playlist.files.length; j++) {
-                const song = playlist.files[j];
-                if (key === 'p') {
-                    song.pauseSong();
-                }
-                if (key === 's') {
-                    song.stopSong();
-                }
-                if (key === 'r') {
-                    song.resumeSong();
-                }
-            }
+    reproducePlaylist(ui) {
+        if (ui.interface !== 0) {
+            this.selectedPlaylist.playPlaylist();
         }
     }
-
-    drawFunctions() {
-        ellipse(100, 200, 50, 50);
-        ellipse(200, 200, 50, 50);
-        ellipse(300, 200, 50, 50);
-        ellipse(250, 300, 25, 25);
-        ellipse(150, 300, 25, 25);
-        this.playingPosition();
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            for (let j = 0; j < playlist.files.length; j++) {
-                const song = playlist.files[j];
-                song.showPlayingTime();
-                song.showLength();
-                song.nowPlaying();
-                song.volumeValue(this.volumeSlider.value());
-                
-                
-            }
+    nextSong(ui) {
+        if (ui.interface !== 0) {
+            this.selectedPlaylist.next()
         }
     }
-    volume() {
-        this.volumeSlider = createSlider(0,1,0.5,0.01);
-        this.volumeSlider.position(0,370);
-    }
-    playing(){
-        let duration;
-        let currentTime;
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            for (let j = 0; j < playlist.files.length; j++) {
-                const song = playlist.files[j];
-                if (song.audioFile.isPlaying()) {
-                    duration = song.audioFile.duration();
-                }
-            }
+    previousSong(ui) {
+        if (ui.interface !== 0) {
+            this.selectedPlaylist.previous();
         }
-        this.playingSlider = createSlider(0,duration,0,1);
-        this.playingSlider.position(100,350);
     }
-    playingPosition(){
-        for (let i = 0; i < this.listOfPlaylists.length; i++) {
-            const playlist = this.listOfPlaylists[i];
-            for (let j = 0; j < playlist.files.length; j++) {
-                const song = playlist.files[j];
-                if (song.audioFile.isPlaying()) {
-                    this.playingSlider.value(song.audioFile.currentTime());
-                }
-            }
+    songPlaying(ui) {
+        if (ui.interface !== 0) {
+            this.selectedPlaylist.nowPlaying();
         }
     }
 }
