@@ -260,12 +260,16 @@ class MediaPlayer {
     }
     reproducePlaylist(ui) {
         if (ui.interface !== 0) {
-            this.selectedPlaylist.playPlaylist();
+            if (dist(211.5, 425.5, mouseX, mouseY) < 30) {
+                this.selectedPlaylist.playPlaylist();
+            }
         }
     }
     nextSong(ui) {
         if (ui.interface !== 0) {
-            this.selectedPlaylist.next()
+            if (dist(1006, 1002, mouseX, mouseY) < 30) {
+                this.selectedPlaylist.next()
+            }
         }
     }
     previousSong(ui) {

@@ -15,32 +15,14 @@ class Playlist {
         this.currentSong;
     }
     playPlaylist() {
-        if (dist(211.5, 425.5, mouseX, mouseY) < 30) {
-            this.stopPlaylist();
-            this.songs[0].playSong();
-        }
-    }
-    nowPlaying() {
-        this.songs.forEach(song => {
-            if (song.audioFile.isPlaying()) {
-                textSize(26)
-                fill(255);
-                textStyle(BOLD)
-                text(song.name, 150, 993);
-                textSize(22)
-                textStyle(ITALIC)
-                text(song.artist, 150, 1021);
-                textStyle(NORMAL)
-                fill(214, 30, 208);
-                text(song.length + ' seconds', 150, 1047);
-                rect(944,991, 5, 17)
-                rect(954,991, 5, 17)
-            }
-            if (song.audioFile.isPlaying() === false) {
-                triangle(946,991,960,1000,946,1009);
-                
-            }
-        });
+        this.stopPlaylist();
+        this.currentSong = this.songs[0];
+        this.currentSong.playSong();
+        console.log(this.currentSong)
+        this.currentSong.audioFile.onended(() => {
+            this.next();
+            console.log(this.currentSong);
+        })
     }
     showCover() {
         image(this.album, 172, 483, 377, 377);
@@ -52,15 +34,10 @@ class Playlist {
         }
     }
     next() {
-        for (let i = 0; i < this.songs.length; i++) {
-            const song = this.songs[i];
-            if (dist(1006, 1002, mouseX, mouseY) < 30) {
-                if (song.audioFile.isPlaying()) {
-                    this.songs[i].stopSong();
-                    i = i + 1;
-                    this.songs[i].playSong();
-                }
-            }
+        if (this.currentSong.audioFile.isPlaying()) {
+            this.currentSong = this.songs[this.songs.indexOf(this.currentSong) + 1]
+            this.currentSong.playSong();
+            console.log(this.currentSong);
         }
     }
     previous() {
@@ -78,5 +55,27 @@ class Playlist {
                 }
             }
         }
+    }
+    nowPlaying() {
+        this.songs.forEach(song => {
+            if (song.audioFile.isPlaying()) {
+                textSize(26)
+                fill(255);
+                textStyle(BOLD)
+                text(song.name, 150, 993);
+                textSize(22)
+                textStyle(ITALIC)
+                text(song.artist, 150, 1021);
+                textStyle(NORMAL)
+                fill(214, 30, 208);
+                text(song.length + ' seconds', 150, 1047);
+                rect(944, 991, 5, 17)
+                rect(954, 991, 5, 17)
+            }
+            if (song.audioFile.isPlaying() === false) {
+                triangle(946, 991, 960, 1000, 946, 1009);
+
+            }
+        });
     }
 }
