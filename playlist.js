@@ -4,11 +4,13 @@ class Playlist {
         cover,
         x,
         y,
+        album
     }) {
         this.name = name;
         this.cover = cover;
         this.x = x;
         this.y = y;
+        this.album = album
         this.songs = [];
         this.currentSong;
     }
@@ -41,7 +43,7 @@ class Playlist {
         });
     }
     showCover() {
-        image(this.cover, 172, 483, 377, 377);
+        image(this.album, 172, 483, 377, 377);
     }
     stopPlaylist() {
         for (let j = 0; j < this.songs.length; j++) {

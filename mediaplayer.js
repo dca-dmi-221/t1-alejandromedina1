@@ -19,6 +19,10 @@ class MediaPlayer {
         this.covers[0] = loadImage('./resources/cover1.png');
         this.covers[1] = loadImage('./resources/cover2.png');
         this.covers[2] = loadImage('./resources/cover3.png');
+        this.albums = []
+        this.albums[0] = loadImage('./resources/album1.png');
+        this.albums[1] = loadImage('./resources/album2.png');
+        this.albums[2] = loadImage('./resources/album3.png');
         this.selectedPlaylist = undefined
         this.volumeSlider = undefined;
         this.playingSlider = undefined;
@@ -50,19 +54,22 @@ class MediaPlayer {
             name: 'Black Panther Vol.1 ',
             cover: this.covers[0],
             x: undefined,
-            y: undefined
+            y: undefined,
+            album: this.albums[0]
         }));
         this.playlists.push(new Playlist({
             name: 'Black Panther Vol.2 ',
             cover: this.covers[1],
             x: undefined,
-            y: undefined
+            y: undefined,
+            album: this.albums[1]
         }));
         this.playlists.push(new Playlist({
             name: 'Black Panther Vol.3 ',
             cover: this.covers[2],
             x: undefined,
-            y: undefined
+            y: undefined,
+            album: this.albums[2]
         }));
         this.createSongsForPlaylist();
     }
@@ -77,6 +84,10 @@ class MediaPlayer {
                 playlist.x = xi + (step * mod);
                 playlist.y = yi;
                 image(playlist.cover, playlist.x, playlist.y);
+                if (this.volumeSlider !== undefined && this.soundInput !== undefined) {
+                    this.volumeSlider.style('display', 'none');
+                    this.soundInput.style('display', 'none');    
+                }
             });
         }
         if (ui.interface !== 0) {
@@ -95,7 +106,7 @@ class MediaPlayer {
                 fill(214, 30, 208);
                 text(playlist.songs.length + ' songs', playlist.x, playlist.y + 20);
                 this.volume();
-                playlist.showCover();
+                this.selectedPlaylist.showCover();
             });
         }
     }
