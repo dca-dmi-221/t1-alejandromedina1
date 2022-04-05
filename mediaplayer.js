@@ -2,7 +2,7 @@ class MediaPlayer {
     constructor() {
         this.playlists = [];
         this.songs = [];
-        this.songs[0] = loadSound('songs/Black_Panther.m4a');
+        this.songs[0] = loadSound('songs/Suspense Short .m4a');
         this.songs[1] = loadSound('songs/Kendrick_Lamar_SZA_All_The_Stars.ogg');
         this.songs[2] = loadSound('songs/Kendrick_Lamar_X.ogg');
         this.songs[3] = loadSound('songs/The_Ways.ogg');

@@ -21,7 +21,7 @@ class Playlist {
         this.currentSong = this.songs[this.currentIndex];
         this.currentSong.playSong();
         console.log(this.currentSong)
-        this.currentSong.audioFile.onended(this.next)
+        this.currentSong.audioFile.onended(()=> this.keepPlaying(this.songs,this.currentSong,this.currentIndex))
     }
     showCover() {
         image(this.album, 172, 483, 377, 377);
@@ -33,28 +33,40 @@ class Playlist {
         }
     }
     next() {
+        this.currentSong.stopSong();
+        this.currentIndex += 1;
+
+        this.currentSong = this.songs[this.currentIndex]
         this.currentSong.playSong();
-            this.currentIndex +=1;
-            
-            this.currentSong = this.songs[this.currentIndex]
-            this.currentSong.playSong();
-            console.log(this.currentSong);
+        console.log(this.currentSong);
+    }
+    keepPlaying(s, cs,i) {
+        let songs = s;
+        let index = i;
+        let currentSong = cs;
+        console.log(songs);
+        console.log(currentSong)
+        this.currentSong.stopSong();
+        index +=1;
+        this.currentIndex = index;
+        this.currentSong = songs[index];
+        this.currentSong.playSong();
     }
     previous() {
-            if (dist(894, 1002, mouseX, mouseY) < 30) {
-                if (this.currentSong.audioFile.isPlaying()) {
-                    if (this.currentIndex > 0) {
-                        this.currentSong.stopSong();
-                        this.currentIndex -=1;
-                        this.currentSong = this.songs[this.currentIndex]
-                        this.currentSong.playSong();
-                    } else if (this.currentIndex === 0) {
-                        this.currentSong.stopSong();
-                        this.currentSong = this.songs[0]
-                        this.currentSong.playSong();
-                    }
+        if (dist(894, 1002, mouseX, mouseY) < 30) {
+            if (this.currentSong.audioFile.isPlaying()) {
+                if (this.currentIndex > 0) {
+                    this.currentSong.stopSong();
+                    this.currentIndex -= 1;
+                    this.currentSong = this.songs[this.currentIndex]
+                    this.currentSong.playSong();
+                } else if (this.currentIndex === 0) {
+                    this.currentSong.stopSong();
+                    this.currentSong = this.songs[0]
+                    this.currentSong.playSong();
                 }
             }
+        }
     }
     nowPlaying() {
         this.songs.forEach(song => {
