@@ -107,7 +107,6 @@ class MediaPlayer {
                 text(playlist.songs.length + ' songs', playlist.x, playlist.y + 20);
                 this.volume();
                 this.selectedPlaylist.showCover();
-                this.playingSlider.showSlider();
             });
         }
     }
@@ -285,10 +284,11 @@ class MediaPlayer {
     }
     songPlaying(ui) {
         if (ui.interface !== 0 && this.selectedPlaylist.currentSong !== undefined) {
+            this.playingSlider.showSlider(this.selectedPlaylist.currentSong.audioFile.currentTime(),this.selectedPlaylist.currentSong.audioFile.duration());
             this.selectedPlaylist.nowPlaying();
         }
     }
     sliderDrag(){
-        this.playingSlider.dragBonderie();
+        this.playingSlider.dragBonderie(this.selectedPlaylist.currentSong);
     }
 }

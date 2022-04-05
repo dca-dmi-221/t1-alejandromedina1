@@ -12,30 +12,27 @@ class Slider {
             w: WIDTH,
             h: HEIGHT
         }
-        this.bonderies = {
-            x: X,
-            y: Y - 2,
-            r: 15
-        }
     }
 
-    showSlider() {
+    showSlider(currentTime, duration) {
         fill(86, 89, 97);
         noStroke();
         rect(this.rectangle.x, this.rectangle.y, this.rectangle.w, this.rectangle.h);
-        if (this.song !== undefined) {
-            const HEADTIME = map(song.audioFile.currentTime(), 0, song.audioFile.duration(), 0, this.rectangle.w);
-            fill(214, 30, 208);
-            rect(this.rectangle.x, this.rectangle.y, HEADTIME, this.rectangle.h)
-        }
+        const HEADTIME = map(currentTime, 0, duration, 0, this.rectangle.w);
+        fill(214, 30, 208);
+        rect(this.rectangle.x, this.rectangle.y, HEADTIME, this.rectangle.h);
     }
-    dragBonderie() {
-        if (song !== undefined) {
-            const isInRange = mouseX > this.bonderies.x1 && mouseX < this.bonderies.x2 && mouseY > this.bonderies.y1 && mouseY < this.bonderies.y2;
-            if (isInRange) {
-                    const head = map(mouseX, this.bonderies.x1, this.bonderies.x2, 0, song.audioFile.duration());
-                    song.jump(head)
-            }
+    dragBonderie(song) {
+        const bonderies = {
+            x1: this.rectangle.x,
+            x2: this.rectangle.x + this.rectangle.w,
+            y1: this.rectangle.y - 2,
+            y2: this.rectangle.y + this.rectangle.h + 2,
+        }
+        const isInRange = mouseX > bonderies.x1 && mouseX < bonderies.x2 && mouseY > bonderies.y1 && mouseY < bonderies.y2;
+        if (isInRange) {
+            const head = map(mouseX, bonderies.x1, bonderies.x2, 0, song.audioFile.duration());
+            song.audioFile.jump(head)
         }
     }
 
