@@ -25,7 +25,7 @@ class MediaPlayer {
         this.albums[2] = loadImage('./resources/album3.png');
         this.selectedPlaylist = undefined
         this.volumeSlider = undefined;
-        this.playingSlider = undefined;
+        this.playingSlider = new Slider();
         this.soundInput = undefined;
         this.isPlaying = false;
     }
@@ -86,7 +86,7 @@ class MediaPlayer {
                 image(playlist.cover, playlist.x, playlist.y);
                 if (this.volumeSlider !== undefined && this.soundInput !== undefined) {
                     this.volumeSlider.style('display', 'none');
-                    this.soundInput.style('display', 'none');    
+                    this.soundInput.style('display', 'none');
                 }
             });
         }
@@ -107,6 +107,7 @@ class MediaPlayer {
                 text(playlist.songs.length + ' songs', playlist.x, playlist.y + 20);
                 this.volume();
                 this.selectedPlaylist.showCover();
+                this.playingSlider.showSlider();
             });
         }
     }
@@ -119,9 +120,9 @@ class MediaPlayer {
                     ui.interface = 1;
                     this.createSoundInput();
                     this.createVolumeInput();
-                    if(this.selectedPlaylist){
-                        console.log("dfd")
-                        this.selectedPlaylist.currentSong.stopSong();
+                    if (this.selectedPlaylist !== playlist && this.selectedPlaylist !== undefined) {
+                        console.log(this.selectedPlaylist.currentSong)
+                        this.selectedPlaylist.currentSong.pauseSong();
                     }
                     this.selectedPlaylist = playlist;
                 }
@@ -265,7 +266,7 @@ class MediaPlayer {
     reproducePlaylist(ui) {
         if (ui.interface !== 0) {
             if (dist(211.5, 425.5, mouseX, mouseY) < 30) {
-                
+
                 this.selectedPlaylist.playPlaylist();
             }
         }
@@ -283,8 +284,11 @@ class MediaPlayer {
         }
     }
     songPlaying(ui) {
-        if (ui.interface !== 0) {
+        if (ui.interface !== 0 && this.selectedPlaylist.currentSong !== undefined) {
             this.selectedPlaylist.nowPlaying();
         }
+    }
+    sliderDrag(){
+        this.playingSlider.dragBonderie();
     }
 }

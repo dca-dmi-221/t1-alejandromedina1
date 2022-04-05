@@ -44,7 +44,6 @@ class Playlist {
         let songs = s;
         let index = i;
         let currentSong = cs;
-        console.log(songs);
         console.log(currentSong)
         this.currentSong.stopSong();
         index +=1;
@@ -69,25 +68,23 @@ class Playlist {
         }
     }
     nowPlaying() {
-        this.songs.forEach(song => {
-            if (song.audioFile.isPlaying()) {
+            if (this.currentSong.audioFile.isPlaying()) {
                 textSize(26)
                 fill(255);
                 textStyle(BOLD)
-                text(song.name, 150, 993);
+                text(this.currentSong.name, 150, 993);
                 textSize(22)
                 textStyle(ITALIC)
-                text(song.artist, 150, 1021);
+                text(this.currentSong.artist, 150, 1021);
                 textStyle(NORMAL)
                 fill(214, 30, 208);
-                text(song.length + ' seconds', 150, 1047);
+                text(this.currentSong.length + ' seconds', 150, 1047);
                 rect(944, 991, 5, 17)
                 rect(954, 991, 5, 17)
             }
-            if (song.audioFile.isPlaying() === false) {
+            if (this.currentSong.audioFile.isPlaying() === false || this.currentSong.audioFile.isPaused()) {
                 triangle(946, 991, 960, 1000, 946, 1009);
-
             }
-        });
+            image(this.album, 39.5, 969.5, 85, 85);
     }
 }

@@ -37,6 +37,14 @@ class Song {
     stopSong() {
             this.audioFile.stop();
     }
+    songDuration() {
+        this.audioFile.duration();
+    }
+    songCurrentTime() {
+        if (this.audioFile.isPlaying()) {
+            this.duration.currentTime()
+        }
+    }
     showPlayingTime() {
         if (this.audioFile.isPlaying() || this.audioFile.isPaused()) {
             let time = Math.floor(this.audioFile.currentTime());

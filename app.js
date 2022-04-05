@@ -27,7 +27,7 @@ class App {
         this.mediaPlayer.previousSong(this.ui);
     }
     mouseDraggedFunctions() {
-        //
+        this.mediaPlayer.sliderDrag();
     }
     mouseReleasedFunctions() {
         //
