@@ -22,7 +22,12 @@ class Song {
         }
     }
     playSong(){
-        this.audioFile.play()
+        if (this.audioFile.isPlaying()) {
+            this.audioFile.stop();
+        }else{
+            this.audioFile.play()
+        }
+        
     }
     pauseSong() {
         if (this.audioFile.isPlaying()) {

@@ -119,6 +119,10 @@ class MediaPlayer {
                     ui.interface = 1;
                     this.createSoundInput();
                     this.createVolumeInput();
+                    if(this.selectedPlaylist){
+                        console.log("dfd")
+                        this.selectedPlaylist.currentSong.stopSong();
+                    }
                     this.selectedPlaylist = playlist;
                 }
             });
@@ -261,6 +265,7 @@ class MediaPlayer {
     reproducePlaylist(ui) {
         if (ui.interface !== 0) {
             if (dist(211.5, 425.5, mouseX, mouseY) < 30) {
+                
                 this.selectedPlaylist.playPlaylist();
             }
         }

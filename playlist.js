@@ -13,16 +13,15 @@ class Playlist {
         this.album = album
         this.songs = [];
         this.currentSong;
+        this.currentIndex;
     }
     playPlaylist() {
         this.stopPlaylist();
-        this.currentSong = this.songs[0];
+        this.currentIndex = 0;
+        this.currentSong = this.songs[this.currentIndex];
         this.currentSong.playSong();
         console.log(this.currentSong)
-        this.currentSong.audioFile.onended(() => {
-            this.next();
-            console.log(this.currentSong);
-        })
+        this.currentSong.audioFile.onended(this.next)
     }
     showCover() {
         image(this.album, 172, 483, 377, 377);
@@ -34,27 +33,28 @@ class Playlist {
         }
     }
     next() {
-        if (this.currentSong.audioFile.isPlaying()) {
-            this.currentSong = this.songs[this.songs.indexOf(this.currentSong) + 1]
+        this.currentSong.playSong();
+            this.currentIndex +=1;
+            
+            this.currentSong = this.songs[this.currentIndex]
             this.currentSong.playSong();
             console.log(this.currentSong);
-        }
     }
     previous() {
-        for (let i = 0; i < this.songs.length; i++) {
             if (dist(894, 1002, mouseX, mouseY) < 30) {
-                if (this.songs[i].audioFile.isPlaying()) {
-                    if (i > 0) {
-                        this.songs[i].stopSong();
-                        i = i - 1;
-                        this.songs[i].playSong();
-                    } else if (i === 0) {
-                        this.songs[i].stopSong();
-                        this.songs[i].playSong();
+                if (this.currentSong.audioFile.isPlaying()) {
+                    if (this.currentIndex > 0) {
+                        this.currentSong.stopSong();
+                        this.currentIndex -=1;
+                        this.currentSong = this.songs[this.currentIndex]
+                        this.currentSong.playSong();
+                    } else if (this.currentIndex === 0) {
+                        this.currentSong.stopSong();
+                        this.currentSong = this.songs[0]
+                        this.currentSong.playSong();
                     }
                 }
             }
-        }
     }
     nowPlaying() {
         this.songs.forEach(song => {
