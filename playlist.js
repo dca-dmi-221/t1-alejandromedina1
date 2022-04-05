@@ -20,8 +20,8 @@ class Playlist {
         this.currentIndex = 0;
         this.currentSong = this.songs[this.currentIndex];
         this.currentSong.playSong();
-        console.log(this.currentSong)
-        this.currentSong.audioFile.onended(()=> this.keepPlaying(this.songs,this.currentSong,this.currentIndex))
+        console.log(this.currentSong);
+        this.currentSong.audioFile.onended(() => this.keepPlaying(this.songs, this.currentSong, this.currentIndex))
     }
     showCover() {
         image(this.album, 172, 483, 377, 377);
@@ -32,6 +32,18 @@ class Playlist {
             song.stopSong();
         }
     }
+    pausePlaylist() {
+        if (this.currentSong !== undefined) {
+            if (dist(951, 1010, mouseX, mouseY) < 30) {
+                if (this.currentSong.audioFile.isPlaying()) {
+                    this.currentSong.pauseSong();
+                } else {
+                    this.currentSong.playSong();
+                }
+            }
+
+        }
+    }
     next() {
         this.currentSong.stopSong();
         this.currentIndex += 1;
@@ -40,13 +52,13 @@ class Playlist {
         this.currentSong.playSong();
         console.log(this.currentSong);
     }
-    keepPlaying(s, cs,i) {
+    keepPlaying(s, cs, i) {
         let songs = s;
         let index = i;
         let currentSong = cs;
         console.log(currentSong)
         this.currentSong.stopSong();
-        index +=1;
+        index += 1;
         this.currentIndex = index;
         this.currentSong = songs[index];
         this.currentSong.playSong();
@@ -68,23 +80,23 @@ class Playlist {
         }
     }
     nowPlaying() {
-            if (this.currentSong.audioFile.isPlaying()) {
-                textSize(26)
-                fill(255);
-                textStyle(BOLD)
-                text(this.currentSong.name, 150, 993);
-                textSize(22)
-                textStyle(ITALIC)
-                text(this.currentSong.artist, 150, 1021);
-                textStyle(NORMAL)
-                fill(214, 30, 208);
-                text(this.currentSong.length + ' seconds', 150, 1047);
-                rect(944, 991, 5, 17)
-                rect(954, 991, 5, 17)
-            }
-            if (this.currentSong.audioFile.isPlaying() === false || this.currentSong.audioFile.isPaused()) {
-                triangle(946, 991, 960, 1000, 946, 1009);
-            }
-            image(this.album, 39.5, 969.5, 85, 85);
+        if (this.currentSong.audioFile.isPlaying()) {
+            textSize(26)
+            fill(255);
+            textStyle(BOLD)
+            text(this.currentSong.name, 150, 993);
+            textSize(22)
+            textStyle(ITALIC)
+            text(this.currentSong.artist, 150, 1021);
+            textStyle(NORMAL)
+            fill(214, 30, 208);
+            text(this.currentSong.length + ' seconds', 150, 1047);
+            rect(944, 991, 5, 17)
+            rect(954, 991, 5, 17)
+        }
+        if (this.currentSong.audioFile.isPlaying() === false || this.currentSong.audioFile.isPaused()) {
+            triangle(946, 991, 960, 1000, 946, 1009);
+        }
+        image(this.album, 39.5, 969.5, 85, 85);
     }
 }

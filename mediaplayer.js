@@ -282,13 +282,25 @@ class MediaPlayer {
             this.selectedPlaylist.previous();
         }
     }
+    pauseSong(ui) {
+        if (ui.interface !== 0) {
+            this.selectedPlaylist.pausePlaylist();
+        }
+    }
     songPlaying(ui) {
         if (ui.interface !== 0 && this.selectedPlaylist.currentSong !== undefined) {
             this.playingSlider.showSlider(this.selectedPlaylist.currentSong.audioFile.currentTime(),this.selectedPlaylist.currentSong.audioFile.duration());
             this.selectedPlaylist.nowPlaying();
         }
     }
-    sliderDrag(){
-        this.playingSlider.dragBonderie(this.selectedPlaylist.currentSong);
+    resumeSong(ui) {
+        if (ui.interface !== 0) {
+            this.selectedPlaylist.resumePlaylist();
+        }
+    }
+    sliderDrag(ui){
+        if (ui.interface !== 0) {
+            this.playingSlider.dragBonderie(this.selectedPlaylist.currentSong);
+        }
     }
 }
