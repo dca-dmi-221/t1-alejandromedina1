@@ -23,13 +23,28 @@ class Playlist {
         console.log(this.currentSong);
         this.currentSong.audioFile.onended(() => this.keepPlaying(this.songs, this.currentSong, this.currentIndex))
     }
+    pickSong() {
+        this.songs.forEach(song => {
+            if (song.x < mouseX && mouseX < song.x + 714 && song.y < mouseY && mouseY < song.y + 100) {
+                if (this.currentSong !== undefined) {
+                    this.currentSong.stopSong();
+                }
+                this.currentIndex = this.songs.indexOf(song);
+                this.currentSong = this.songs[this.currentIndex];
+                this.currentSong.playSong()
+            }
+        });
+    }
     showCover() {
         image(this.album, 172, 483, 377, 377);
+        if (this.currentSong !== undefined) {
+            this.currentSong.showPlayingTime();
+            this.currentSong.showLength();
+        }
     }
     stopPlaylist() {
-        for (let j = 0; j < this.songs.length; j++) {
-            const song = this.songs[j];
-            song.stopSong();
+        if (dist(1136, 1000, mouseX, mouseY) < 30) {
+            this.currentSong.stopSong();
         }
     }
     pausePlaylist() {
@@ -80,7 +95,7 @@ class Playlist {
         }
     }
     nowPlaying() {
-        if (this.currentSong.audioFile.isPlaying()) {
+        if (this.currentSong.audioFile.isPlaying() || this.currentSong.audioFile.isPaused()) {
             textSize(26)
             fill(255);
             textStyle(BOLD)
@@ -91,8 +106,11 @@ class Playlist {
             textStyle(NORMAL)
             fill(214, 30, 208);
             text(this.currentSong.length + ' seconds', 150, 1047);
+        }
+        if (this.currentSong.audioFile.isPlaying()) {
             rect(944, 991, 5, 17)
             rect(954, 991, 5, 17)
+            
         }
         if (this.currentSong.audioFile.isPlaying() === false || this.currentSong.audioFile.isPaused()) {
             triangle(946, 991, 960, 1000, 946, 1009);

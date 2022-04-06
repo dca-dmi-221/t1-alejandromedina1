@@ -4,8 +4,6 @@ class Slider {
         const Y = 1046
         const HEIGHT = 7;
         const WIDTH = 754;
-        this.pointerX = 961;
-        this.pointerY = 415 + (WIDTH / 2) + 25
         this.rectangle = {
             x: X,
             y: Y,
@@ -13,7 +11,6 @@ class Slider {
             h: HEIGHT
         }
     }
-
     showSlider(currentTime, duration) {
         fill(86, 89, 97);
         noStroke();
@@ -34,12 +31,5 @@ class Slider {
             const head = map(mouseX, bonderies.x1, bonderies.x2, 0, song.audioFile.duration());
             song.audioFile.jump(head)
         }
-    }
-
-    formatTime(time) {
-        const minutes = Math.floor(time / 60);
-        const seconds = Math.floor(time / (minutes + 1));
-        const secondsBonitos = seconds < 10 ? "0" + seconds.toString() : seconds
-        return (minutes + ":" + secondsBonitos);
     }
 }

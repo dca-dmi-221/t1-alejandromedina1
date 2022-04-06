@@ -26,7 +26,8 @@ class App {
         this.mediaPlayer.nextSong(this.ui);
         this.mediaPlayer.previousSong(this.ui);
         this.mediaPlayer.pauseSong(this.ui);
-        //this.mediaPlayer.resumeSong(this.ui)
+        this.mediaPlayer.stopPlaying(this.ui);
+        this.mediaPlayer.chooseSong(this.ui);
     }
     mouseDraggedFunctions() {
         this.mediaPlayer.sliderDrag(this.ui);

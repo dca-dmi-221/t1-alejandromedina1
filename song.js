@@ -48,13 +48,14 @@ class Song {
     showPlayingTime() {
         if (this.audioFile.isPlaying() || this.audioFile.isPaused()) {
             let time = Math.floor(this.audioFile.currentTime());
-            text(time, 100, 300);
+            fill(255);
+            text(time, 530, 1055);
         }
     }
     showLength() {
         if (this.audioFile.isPlaying() || this.audioFile.isPaused()) {
             let length = Math.floor(this.audioFile.duration());
-            text(length, 200, 300);
+            text(length, 1332, 1055);
         }
     }
     volumeValue(value){

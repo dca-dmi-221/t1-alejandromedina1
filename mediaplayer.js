@@ -113,9 +113,9 @@ class MediaPlayer {
     selectPlaylist(ui) {
         if (ui.interface === 0) {
             this.playlists.forEach(playlist => {
-                const width = playlist.x + 305;
-                const height = playlist.y + 270;
-                if (playlist.x < mouseX && mouseX < width && playlist.y < mouseY && mouseY < height) {
+                const WIDTH = playlist.x + 305;
+                const HEIGHT = playlist.y + 270;
+                if (playlist.x < mouseX && mouseX < WIDTH && playlist.y < mouseY && mouseY < HEIGHT) {
                     ui.interface = 1;
                     this.createSoundInput();
                     this.createVolumeInput();
@@ -124,6 +124,7 @@ class MediaPlayer {
                         this.selectedPlaylist.currentSong.pauseSong();
                     }
                     this.selectedPlaylist = playlist;
+                    console.log(this.selectedPlaylist);
                 }
             });
         }
@@ -258,7 +259,8 @@ class MediaPlayer {
                 name: name,
                 cover: this.covers[pick],
                 x: 893,
-                y: 700
+                y: 700,
+                album: this.albums [0]
             }));
         }
     }
@@ -293,6 +295,11 @@ class MediaPlayer {
             this.selectedPlaylist.nowPlaying();
         }
     }
+    stopPlaying(ui) {
+        if (ui.interface !== 0) {
+            this.selectedPlaylist.stopPlaylist();
+        }
+    }
     resumeSong(ui) {
         if (ui.interface !== 0) {
             this.selectedPlaylist.resumePlaylist();
@@ -301,6 +308,11 @@ class MediaPlayer {
     sliderDrag(ui){
         if (ui.interface !== 0) {
             this.playingSlider.dragBonderie(this.selectedPlaylist.currentSong);
+        }
+    }
+    chooseSong(ui) {
+        if (ui.interface !== 0) {
+            this.selectedPlaylist.pickSong();
         }
     }
 }

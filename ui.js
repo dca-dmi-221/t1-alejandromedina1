@@ -31,19 +31,19 @@ class UI {
         }
     }
     pickPlaylistCover() {
-        const pick = Math.floor(Math.random() * 3);
-        return pick;
+        const PICK = Math.floor(Math.random() * 3);
+        return PICK;
     }
     showSongs(playlist) {
         if (this.interface !== 0) {
             let xi = 585;
             let yi = 808;
-            const step = -114
+            const STEP = -114
             playlist.songs.forEach((song, i) => {
                 song.x = xi
-                song.y = yi + (step * i)
-                const textX = song.x + 100;
-                const textY = song.y + 30
+                song.y = yi + (STEP * i)
+                const TEXTX = song.x + 100;
+                const TEXTY = song.y + 30
                 noStroke();
                 fill(255, 46)
                 rect(song.x, song.y, 714, 100, 16);
@@ -51,13 +51,13 @@ class UI {
                 textStyle(BOLD);
                 textSize(23);
                 textFont('Montserrat');
-                text(song.name, textX, textY);
+                text(song.name, TEXTX, TEXTY);
                 textSize(22);
                 textStyle(ITALIC);
-                text(song.artist, textX, textY + 30);
+                text(song.artist, TEXTX, TEXTY + 30);
                 fill(214, 30, 208);
                 textStyle(NORMAL);
-                text(song.length + ' seconds', textX, textY + 60);
+                text(song.length + ' seconds', TEXTX, TEXTY + 60);
             });
         }
     }
